@@ -1,5 +1,7 @@
 import { Server as SocketIOServer } from "socket.io";
 import { Server as HttpServer } from "http";
+import dotenv from "dotenv";
+dotenv.config();
 
 export function setupSocketIO(server: HttpServer): SocketIOServer {
   const io = new SocketIOServer(server, {

@@ -6,15 +6,18 @@ import { setupSocketIO } from "./socket";
 import { socketIOMiddleware } from "./middlewares/socket";
 import { Server as SocketIOServer } from "socket.io";
 import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(cors({
-  origin: `${process.env.FRONTEND}`, // Reemplaza con la URL de tu frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'access-token'],
-}));
-
+app.use(
+  cors({
+    origin: `${process.env.FRONTEND}`, // Reemplaza con la URL de tu frontend
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "access-token"],
+  })
+);
 const port = 3000;
 
 const server = createServer(app);
