@@ -87,7 +87,7 @@ export const getTaskByUserId = async (
 
     const totalPages = Math.ceil(Number(totalItems) / pageSize);
     if (task.length === 0) {
-      return { error: "No se encuentra la tarea" };
+      return { error: "No se encuentra el usuario" };
     }
     return {
       data: task,
@@ -123,9 +123,17 @@ export const registerTask = async (data: TaskRequest) => {
         type: QueryTypes.INSERT,
       }
     );
+    const [f_task] = await sequelize.query(
+      `SELECT * FROM Task WHERE idtask = :idtask`,
+      {
+        replacements: { idtask: task[0] },
+        type: QueryTypes.SELECT,
+        transaction,
+      }
+    );
 
     await transaction.commit();
-    return { message: `Tarea creada correctamente bajo en ID: ${task[0]}` };
+    return f_task;
   } catch (error) {
     await transaction.rollback();
     console.error(error);
@@ -162,9 +170,18 @@ export const updateTask = async (id: number, data: TaskRequest) => {
       return { error: "No se encuentra la tarea or no changes made" };
     }
 
+    const [f_task] = await sequelize.query(
+      `SELECT * FROM Task WHERE idtask = :idtask`,
+      {
+        replacements: { idtask: id },
+        type: QueryTypes.SELECT,
+        transaction,
+      }
+    );
+
     await transaction.commit();
 
-    return { success: true, message: "Tarea actualizada con exito" };
+    return { data: f_task, message: "Tarea actualizada con exito" };
   } catch (error) {
     await transaction.rollback();
     console.error(error);
@@ -185,7 +202,7 @@ export const deleteTask = async (id: number) => {
     return { success: true, idtask: id };
   } catch (error) {
     await transaction.rollback();
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };

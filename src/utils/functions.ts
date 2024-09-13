@@ -5,7 +5,7 @@ import { auth } from "../utils/auth";
 
 export const login = async (data: Login, user: User) => {
   const match = await bcrypt.compare(data.passwordhash, user.passwordhash);
-  if (!match) return { error: "Incorrect password" };
+  if (!match) return { error: "Contraseña Incorrecta" };
   const infoParsed = parseLoginUser(user);
   const token = auth(infoParsed);
   return { ...infoParsed, token };

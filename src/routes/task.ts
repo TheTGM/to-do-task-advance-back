@@ -7,9 +7,10 @@ import {
   registerTask,
   updateTask,
 } from "../service/taskService";
+import { authSession } from "../middlewares/authSession";
 const router = express.Router();
 
-router.get("/getAllTasks", async (req, res) => {
+router.get("/getAllTasks", authSession, async (req, res) => {
   try {
     const { page, pageSize } = req.query;
     const tasks = await getTasks(Number(page), Number(pageSize));
@@ -19,7 +20,7 @@ router.get("/getAllTasks", async (req, res) => {
   }
 });
 
-router.get("/getTask/:id", async (req, res) => {
+router.get("/getTask/:id", authSession, async (req, res) => {
   try {
     const { id } = req.params;
     const task = await getTaskById(Number(id));
@@ -30,7 +31,7 @@ router.get("/getTask/:id", async (req, res) => {
   }
 });
 
-router.get("/getTaskUser/:id", async (req, res) => {
+router.get("/getTaskUser/:id", authSession, async (req, res) => {
   try {
     const { id } = req.params;
     const task = await getTaskByUserId(Number(id));
@@ -41,7 +42,7 @@ router.get("/getTaskUser/:id", async (req, res) => {
   }
 });
 
-router.post("/createTask", async (req, res) => {
+router.post("/createTask", authSession, async (req, res) => {
   try {
     const { data } = req.body;
     const taskCreate = await registerTask(data);
@@ -56,14 +57,14 @@ router.post("/createTask", async (req, res) => {
 
     return res
       .status(201)
-      .send({ message: "Task created successfully", data: taskCreate });
+      .send({ message: "Tarea creada con exito", data: taskCreate });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Internal server error" });
   }
 });
 
-router.put("/putTask/:id", async (req, res) => {
+router.put("/putTask/:id", authSession, async (req, res) => {
   try {
     const { id } = req.params;
     const { data } = req.body;
@@ -76,14 +77,14 @@ router.put("/putTask/:id", async (req, res) => {
       req.io.emit("putTask", task);
     }
 
-    return res.status(200).send({ task });
+    return res.status(200).send({ task: task });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Internal server errorx" });
   }
 });
 
-router.delete("/deleteTask/:id", async (req, res) => {
+router.delete("/deleteTask/:id", authSession, async (req, res) => {
   try {
     const { id } = req.params;
     const task = await deleteTask(Number(id));

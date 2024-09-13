@@ -116,12 +116,11 @@ export const loginUser = async (data: Login) => {
         type: QueryTypes.SELECT,
       }
     );
-    console.log(row[0]);
-    if (row.length === 0) return { error: "No se encuentra el usuario" };
+    if (row.length === 0) return { error: ["No se encuentra el usuario"] };
     const user = row[0] as User;
     return login(data, user);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };
@@ -183,7 +182,7 @@ export const deleteUser = async (id: number) => {
     return { success: true, iduser: id };
   } catch (error) {
     await transaction.rollback();
-    console.log(error);
+    console.error(error);
     throw error;
   }
 };

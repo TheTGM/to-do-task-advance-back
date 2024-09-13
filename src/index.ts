@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cors({
   origin: 'http://localhost:5173', // Reemplaza con la URL de tu frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'access-token'],
 }));
 
 const port = 3000;

@@ -31,7 +31,7 @@ describe("POST /loginUser", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
-      message: "User logged in successfully",
+      message: "Usuario inicio sesión exitosamente",
       data: {
         id: 1,
         firstname: "John",

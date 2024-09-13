@@ -31,7 +31,7 @@ describe('POST /createTask', () => {
 
     expect(response.status).toBe(201);
     expect(response.body).toEqual({
-      message: 'Task created successfully',
+      message: 'Tarea creada con exito',
       data: { message: 'Tarea creada correctamente bajo en ID: 1' },
     });
     expect(registerTask).toHaveBeenCalledWith(mockRequestData.data);

@@ -57,7 +57,7 @@ router.post("/loginUser", async (req, res) => {
     }
     return res
       .status(200)
-      .json({ message: "User logged in successfully", data: dataUser });
+      .json({ message: "Usuario inicio sesión exitosamente", data: dataUser });
   } catch (error) {
     console.error(error);
     return res.status(500).send({ message: "Internal server error" });
