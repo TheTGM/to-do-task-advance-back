@@ -4,7 +4,7 @@ import { Server as HttpServer } from "http";
 export function setupSocketIO(server: HttpServer): SocketIOServer {
   const io = new SocketIOServer(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: `${process.env.FRONTEND}`,
       methods: ["GET", "POST", "PUT", "DELETE"],
     },
   });
