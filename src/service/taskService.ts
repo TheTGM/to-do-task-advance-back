@@ -46,12 +46,12 @@ export const getTaskById = async (id: number) => {
       }
     );
     if (task.length === 0) {
-      return { error: "Task not found" };
+      return { error: "No se encuentra la tarea" };
     }
     return task;
   } catch (error) {
     console.error(error);
-    return { error: "Error retrieving task" };
+    return { error: "Error recuperando la tarea" };
   }
 };
 
@@ -87,7 +87,7 @@ export const getTaskByUserId = async (
 
     const totalPages = Math.ceil(Number(totalItems) / pageSize);
     if (task.length === 0) {
-      return { error: "Task not found" };
+      return { error: "No se encuentra la tarea" };
     }
     return {
       data: task,
@@ -97,7 +97,7 @@ export const getTaskByUserId = async (
     };
   } catch (error) {
     console.error(error);
-    return { error: "Error retrieving task" };
+    return { error: "Error recuperando la tarea" };
   }
 };
 
@@ -125,7 +125,7 @@ export const registerTask = async (data: TaskRequest) => {
     );
 
     await transaction.commit();
-    return { message: `Task created successfully with ID: ${task[0]}` };
+    return { message: `Tarea creada correctamente bajo en ID: ${task[0]}` };
   } catch (error) {
     await transaction.rollback();
     console.error(error);
@@ -159,12 +159,12 @@ export const updateTask = async (id: number, data: TaskRequest) => {
 
     if (affectedRows === 0) {
       await transaction.rollback();
-      return { error: "Task not found or no changes made" };
+      return { error: "No se encuentra la tarea or no changes made" };
     }
 
     await transaction.commit();
 
-    return { success: true, message: "Task updated successfully" };
+    return { success: true, message: "Tarea actualizada con exito" };
   } catch (error) {
     await transaction.rollback();
     console.error(error);

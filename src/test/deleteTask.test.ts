@@ -31,7 +31,7 @@ describe('DELETE /deleteTask/:id', () => {
 
   it('should return 400 if task deletion fails due to an error', async () => {
     (deleteTask as jest.Mock).mockResolvedValue({
-      error: 'Task not found or could not be deleted',
+      error: 'No se encuentra la tarea or could not be deleted',
     });
 
     const response = await request(app)
@@ -39,7 +39,7 @@ describe('DELETE /deleteTask/:id', () => {
 
     expect(response.status).toBe(400);
     expect(response.body).toEqual({
-      error: 'Task not found or could not be deleted',
+      error: 'No se encuentra la tarea or could not be deleted',
     });
   });
 

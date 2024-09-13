@@ -21,7 +21,7 @@ describe("PUT /putTask/:id", () => {
   it("should update the task and return 200 with success message", async () => {
     (updateTask as jest.Mock).mockResolvedValue({
       success: true,
-      message: "Task updated successfully",
+      message: "Tarea actualizada con exito",
     });
 
     const response = await request(app)
@@ -32,7 +32,7 @@ describe("PUT /putTask/:id", () => {
     expect(response.body).toEqual({
       task: {
         success: true,
-        message: "Task updated successfully",
+        message: "Tarea actualizada con exito",
       },
     });
     expect(updateTask).toHaveBeenCalledWith(1, mockRequestData);

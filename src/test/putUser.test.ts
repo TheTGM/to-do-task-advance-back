@@ -22,7 +22,7 @@ describe("PUT /putUser/:id", () => {
   it("should update the user and return 200 with success message", async () => {
     (updateUser as jest.Mock).mockResolvedValue({
       success: true,
-      message: "User updated successfully",
+      message: "Usuario actualizado con exito",
     });
 
     const response = await request(app)
@@ -31,7 +31,7 @@ describe("PUT /putUser/:id", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual({
-      user: { success: true, message: "User updated successfully" },
+      user: { success: true, message: "Usuario actualizado con exito" },
     });
     expect(updateUser).toHaveBeenCalledWith({ ...mockUpdateData, iduser: 1 });
   });
@@ -51,9 +51,9 @@ describe("PUT /putUser/:id", () => {
     });
   });
 
-  it("should return 400 if user not found or no changes made", async () => {
+  it("should return 400 if No se encuentra el usuario or no changes made", async () => {
     (updateUser as jest.Mock).mockResolvedValue({
-      error: "User not found or no changes made",
+      error: "No se encuentra el usuario or no changes made",
     });
 
     const response = await request(app)
@@ -62,7 +62,7 @@ describe("PUT /putUser/:id", () => {
 
     expect(response.status).toBe(400);
     expect(response.body).toEqual({
-      user: { error: "User not found or no changes made" },
+      user: { error: "No se encuentra el usuario or no changes made" },
     });
   });
 

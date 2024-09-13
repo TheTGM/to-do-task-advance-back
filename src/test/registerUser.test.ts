@@ -22,7 +22,7 @@ describe('POST /registerUser', () => {
 
   it('should register a user and return 201 with success message', async () => {
     (registerUser as jest.Mock).mockResolvedValue({
-      message: 'User created successfully with ID: 1',
+      message: 'Usuario creado con exito bajo el id: 1',
     });
 
     const response = await request(app)
@@ -31,8 +31,8 @@ describe('POST /registerUser', () => {
 
     expect(response.status).toBe(201);
     expect(response.body).toEqual({
-      message: 'User created successfully',
-      data: { message: 'User created successfully with ID: 1' },
+      message: 'Usuario creado con exito',
+      data: { message: 'Usuario creado con exito bajo el id: 1' },
     });
     expect(registerUser).toHaveBeenCalledWith({
       ...mockRequestData,

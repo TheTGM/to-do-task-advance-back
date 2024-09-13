@@ -5,9 +5,15 @@ import { createServer } from "http";
 import { setupSocketIO } from "./socket";
 import { socketIOMiddleware } from "./middlewares/socket";
 import { Server as SocketIOServer } from "socket.io";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:5173', // Reemplaza con la URL de tu frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 const port = 3000;
 

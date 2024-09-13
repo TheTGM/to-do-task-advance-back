@@ -59,7 +59,7 @@ describe("POST /loginUser", () => {
 
   it("should return 400 if user is not found", async () => {
     (loginUser as jest.Mock).mockResolvedValue({
-      error: "User not found",
+      error: "No se encuentra el usuario",
     });
 
     const response = await request(app)
@@ -68,7 +68,7 @@ describe("POST /loginUser", () => {
 
     expect(response.status).toBe(400);
     expect(response.body).toEqual({
-      dataUser: { error: "User not found" },
+      dataUser: { error: "No se encuentra el usuario" },
     });
   });
 

@@ -48,12 +48,12 @@ export const getUserById = async (id: number) => {
       }
     );
     if (user.length === 0) {
-      return { error: "User not found" };
+      return { error: "No se encuentra el usuario" };
     }
     return user;
   } catch (error) {
     console.error(error);
-    return { error: "Error retrieving user" };
+    return { error: "Error recuperando el usuario" };
   }
 };
 
@@ -63,6 +63,18 @@ export const registerUser = async (data: UserRequest) => {
     const { error } = userSchema.validate(data, { abortEarly: false });
     if (error) {
       return { error: error.details.map((detail) => detail.message) };
+    }
+
+    const existingUser = await sequelize.query(
+      `SELECT email FROM User WHERE email = :email`,
+      {
+        replacements: { email: data.email },
+        type: QueryTypes.SELECT,
+      }
+    );
+
+    if (existingUser.length > 0) {
+      return { error: [`El correo ${data.email} ya está registrado.`] };
     }
     const hashpass = await bcrypt.hash(data.passwordhash, 10);
     const task = await sequelize.query(
@@ -81,9 +93,8 @@ export const registerUser = async (data: UserRequest) => {
         type: QueryTypes.INSERT,
       }
     );
-
     await transaction.commit();
-    return { message: `User created successfully with ID: ${task[0]}` };
+    return { message: `Usuario creado con exito bajo el id: ${task[0]}` };
   } catch (error) {
     await transaction.rollback();
     console.error(error);
@@ -106,7 +117,7 @@ export const loginUser = async (data: Login) => {
       }
     );
     console.log(row[0]);
-    if (row.length === 0) return { error: "User not found" };
+    if (row.length === 0) return { error: "No se encuentra el usuario" };
     const user = row[0] as User;
     return login(data, user);
   } catch (error) {
@@ -141,12 +152,12 @@ export const updateUser = async (data: putUser) => {
 
     if (affectedRows === 0) {
       await transaction.rollback();
-      return { error: "User not found or no changes made" };
+      return { error: "No se encuentra el usuario or no changes made" };
     }
 
     await transaction.commit();
 
-    return { success: true, message: "User updated successfully" };
+    return { success: true, message: "Usuario actualizado con exito" };
   } catch (error) {
     await transaction.rollback();
     console.error(error);

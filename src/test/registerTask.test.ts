@@ -22,7 +22,7 @@ describe('POST /createTask', () => {
 
   it('should create a task and return 201 with success message', async () => {
     (registerTask as jest.Mock).mockResolvedValue({
-      message: 'Task created successfully with ID: 1',
+      message: 'Tarea creada correctamente bajo en ID: 1',
     });
 
     const response = await request(app)
@@ -32,7 +32,7 @@ describe('POST /createTask', () => {
     expect(response.status).toBe(201);
     expect(response.body).toEqual({
       message: 'Task created successfully',
-      data: { message: 'Task created successfully with ID: 1' },
+      data: { message: 'Tarea creada correctamente bajo en ID: 1' },
     });
     expect(registerTask).toHaveBeenCalledWith(mockRequestData.data);
   });
